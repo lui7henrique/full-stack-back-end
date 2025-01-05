@@ -18,7 +18,6 @@ async function seed() {
 			Array.from({ length: 10 }, () =>
 				categoryService.create({
 					name: faker.commerce.department(),
-					description: faker.commerce.productDescription(),
 				}),
 			),
 		);

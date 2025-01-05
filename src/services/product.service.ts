@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Product } from "../schemas/product.schema";
-import type { Model } from "mongoose";
-import type { CreateProductDto } from "../dtos/create-product.dto";
-import type { UpdateProductDto } from "../dtos/update-product.dto";
+import { Model, Types } from "mongoose";
+import { CreateProductDto } from "../dtos/create-product.dto";
+import { UpdateProductDto } from "../dtos/update-product.dto";
 
 @Injectable()
 export class ProductService {
@@ -51,5 +51,15 @@ export class ProductService {
 		}
 
 		return deletedProduct;
+	}
+
+	async getProductIdsByCategoryId(
+		categoryId: string,
+	): Promise<Types.ObjectId[]> {
+		const products = await this.productModel
+			.find({ categoryIds: { $in: [new Types.ObjectId(categoryId)] } })
+			.exec();
+
+		return products.map((product) => product._id as Types.ObjectId);
 	}
 }

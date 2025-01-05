@@ -11,6 +11,7 @@ import { OrderService } from "../services/order.service";
 import { CreateOrderDto } from "../dtos/create-order.dto";
 import { UpdateOrderDto } from "../dtos/update-order.dto";
 import { ApiTags, ApiResponse } from "@nestjs/swagger";
+import { Types } from "mongoose";
 
 @ApiTags("orders")
 @Controller("orders")
@@ -19,7 +20,13 @@ export class OrderController {
 
 	@ApiResponse({ status: 201, description: "Order created." })
 	@Post()
-	create(@Body() createOrderDto: CreateOrderDto) {
+	async create(@Body() createOrderDto: CreateOrderDto) {
+		if (createOrderDto.productIds) {
+			createOrderDto.productIds = createOrderDto.productIds.map((id) => {
+				return new Types.ObjectId(id);
+			});
+		}
+
 		return this.orderService.create(createOrderDto);
 	}
 

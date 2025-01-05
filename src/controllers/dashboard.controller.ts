@@ -1,6 +1,6 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
 import { DashboardService } from "../services/dashboard.service";
-import { ApiTags, ApiResponse } from "@nestjs/swagger";
+import { ApiTags, ApiResponse, ApiQuery } from "@nestjs/swagger";
 
 @ApiTags("dashboard")
 @Controller("dashboard")
@@ -9,7 +9,21 @@ export class DashboardController {
 
 	@ApiResponse({ status: 200, description: "Dashboard metrics retrieved." })
 	@Get("metrics")
-	async getMetrics() {
-		return this.dashboardService.getMetrics();
+	@ApiQuery({ name: "startDate", required: false, type: String })
+	@ApiQuery({ name: "endDate", required: false, type: String })
+	@ApiQuery({ name: "categoryId", required: false, type: String })
+	@ApiQuery({ name: "productId", required: false, type: String })
+	async getMetrics(
+		@Query("startDate") startDate?: string,
+		@Query("endDate") endDate?: string,
+		@Query("categoryId") categoryId?: string,
+		@Query("productId") productId?: string,
+	) {
+		return this.dashboardService.getMetrics(
+			startDate,
+			endDate,
+			categoryId,
+			productId,
+		);
 	}
 }
