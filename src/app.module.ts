@@ -7,6 +7,9 @@ import { Product, ProductSchema } from "./schemas/product.schema";
 import { Category, CategorySchema } from "./schemas/category.schema";
 import { Order, OrderSchema } from "./schemas/order.schema";
 
+import { ProductService } from "./services/product.service";
+import { ProductController } from "./controllers/product.controller";
+
 @Module({
 	imports: [
 		ConfigModule.forRoot({
@@ -29,5 +32,7 @@ import { Order, OrderSchema } from "./schemas/order.schema";
 			{ name: Order.name, schema: OrderSchema },
 		]),
 	],
+	controllers: [ProductController], // Add CategoryController and OrderController
+	providers: [ProductService], // Add CategoryService and OrderService
 })
 export class AppModule {}
