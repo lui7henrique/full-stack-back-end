@@ -9,6 +9,10 @@ import { Order, OrderSchema } from "./schemas/order.schema";
 
 import { ProductService } from "./services/product.service";
 import { ProductController } from "./controllers/product.controller";
+import { CategoryService } from "./services/category.service";
+import { CategoryController } from "./controllers/category.controller";
+import { OrderService } from "./services/order.service";
+import { OrderController } from "./controllers/order.controller";
 
 @Module({
 	imports: [
@@ -32,7 +36,7 @@ import { ProductController } from "./controllers/product.controller";
 			{ name: Order.name, schema: OrderSchema },
 		]),
 	],
-	controllers: [ProductController],
-	providers: [ProductService],
+	controllers: [ProductController, CategoryController, OrderController],
+	providers: [ProductService, CategoryService, OrderService],
 })
 export class AppModule {}
