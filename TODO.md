@@ -18,8 +18,8 @@
 
 3. **CRUDs**
 
-   - [ ] Implement CRUD operations for `Product`, `Category`, and `Order` with validations.
-   - [ ] Handle errors and ensure data consistency.
+   - [x] Implement CRUD operations for `Product`, `Category`, and `Order` with validations.
+   - [x] Handle errors and ensure data consistency.
 
 4. **Dashboard**
 
@@ -28,7 +28,7 @@
 
 5. **Data Seeding Script**
 
-   - [ ] Create a CLI tool to populate the database with fake categories, products, and orders.
+   - [x] Create a CLI tool to populate the database with fake categories, products, and orders.
 
 6. **Serverless Lambda**
 
