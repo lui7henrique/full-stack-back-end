@@ -35,17 +35,21 @@ export class ProductService {
 		const updatedProduct = await this.productModel
 			.findByIdAndUpdate(id, updateProductDto, { new: true })
 			.exec();
+
 		if (!updatedProduct) {
 			throw new NotFoundException(`Product with ID ${id} not found`);
 		}
+
 		return updatedProduct;
 	}
 
 	async remove(id: string): Promise<Product> {
 		const deletedProduct = await this.productModel.findByIdAndDelete(id).exec();
+
 		if (!deletedProduct) {
 			throw new NotFoundException(`Product with ID ${id} not found`);
 		}
+
 		return deletedProduct;
 	}
 }

@@ -32,7 +32,7 @@ import { ProductController } from "./controllers/product.controller";
 			{ name: Order.name, schema: OrderSchema },
 		]),
 	],
-	controllers: [ProductController], // Add CategoryController and OrderController
-	providers: [ProductService], // Add CategoryService and OrderService
+	controllers: [ProductController],
+	providers: [ProductService],
 })
 export class AppModule {}
