@@ -13,6 +13,8 @@ import { CategoryService } from "./services/category.service";
 import { CategoryController } from "./controllers/category.controller";
 import { OrderService } from "./services/order.service";
 import { OrderController } from "./controllers/order.controller";
+import { DashboardService } from "./services/dashboard.service";
+import { DashboardController } from "./controllers/dashboard.controller";
 
 @Module({
 	imports: [
@@ -36,7 +38,12 @@ import { OrderController } from "./controllers/order.controller";
 			{ name: Order.name, schema: OrderSchema },
 		]),
 	],
-	controllers: [ProductController, CategoryController, OrderController],
-	providers: [ProductService, CategoryService, OrderService],
+	controllers: [
+		ProductController,
+		CategoryController,
+		OrderController,
+		DashboardController,
+	],
+	providers: [ProductService, CategoryService, OrderService, DashboardService],
 })
 export class AppModule {}

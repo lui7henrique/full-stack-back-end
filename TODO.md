@@ -23,7 +23,7 @@
 
 4. **Dashboard**
 
-   - [ ] Create an endpoint for aggregated metrics (total orders, revenue, etc.).
+   - [x] Create an endpoint for aggregated metrics (total orders, revenue, etc.).
    - [ ] Use MongoDB queries to filter data by period, category, and product.
 
 5. **Data Seeding Script**
@@ -36,5 +36,5 @@
    - [ ] Demonstrate how to trigger the Lambda (HTTP, cron, etc.).
 
 7. **Delivery**
-   - [ ] Set up Docker/Docker Compose for the backend and MongoDB.
+   - [x] Set up Docker/Docker Compose for the backend and MongoDB.
    - [ ] Document the project (README.md) with instructions for running and testing.
