@@ -6,8 +6,15 @@
 
 2. **Entities and Relationships**
 
-   - [ ] Create entities: `Product`, `Category`, and `Order` with DTOs and Schemas.
-   - [ ] Implement many-to-many relationship (`Product ↔️ Category`).
+   - [x] Define **Product** schema:
+     - Fields: `id`, `name`, `description`, `price`, `categoryIds` (array), `imageUrl`.
+   - [x] Define **Category** schema:
+     - Fields: `id`, `name`.
+   - [x] Define **Order** schema:
+     - Fields: `id`, `date`, `productIds` (array), `total`.
+   - [x] Implement relationships:
+     - Many-to-many: **Product** ↔ **Category**.
+     - One-to-many: **Order** ↔ **Product**.
 
 3. **CRUDs**
 

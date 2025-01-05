@@ -3,6 +3,10 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { envSchema } from "./env";
 
+import { Product, ProductSchema } from "./schemas/product.schema";
+import { Category, CategorySchema } from "./schemas/category.schema";
+import { Order, OrderSchema } from "./schemas/order.schema";
+
 @Module({
 	imports: [
 		ConfigModule.forRoot({
@@ -19,6 +23,11 @@ import { envSchema } from "./env";
 			},
 			inject: [ConfigService],
 		}),
+		MongooseModule.forFeature([
+			{ name: Product.name, schema: ProductSchema },
+			{ name: Category.name, schema: CategorySchema },
+			{ name: Order.name, schema: OrderSchema },
+		]),
 	],
 })
 export class AppModule {}
