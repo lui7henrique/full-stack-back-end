@@ -47,11 +47,7 @@ In a new terminal:
 pnpm run start:lambda
 ```
 
-### 7. Test Lambda Function
-
-```bash
-pnpm run test:lambda
-```
+## Testing Order Notifications
 
 ## Testing Order Notifications
 
@@ -62,11 +58,14 @@ You can test the Lambda function in two ways:
    - Go to `http://localhost:3333/api/docs`
    - Create a new order using the POST /orders endpoint
    - The notification will be triggered automatically
+   - Check the console for an Ethereal email preview link (e.g., `https://ethereal.email/message/...`)
 
 2. **Through CLI** (requires code modification):
    - Currently, you need to modify the order ID directly in the test file
    - Run `pnpm run test:lambda`
-   - Note: This should be improved in future versions to accept CLI parameters
+   - Check the console for an Ethereal email preview link (e.g., `https://ethereal.email/message/...`)
+
+In both cases, the console will display a link to preview the notification email through Ethereal - a fake SMTP service that captures the emails that would be sent in a production environment. The
 
 ## Lambda Trigger Options
 
@@ -91,7 +90,3 @@ Currently, the Lambda function is triggered by an event emitter when orders are 
 
 **Reasoning:**
 This approach prevents invalid references, preserves order history, and avoids unintended data loss.
-
-```
-
-```
