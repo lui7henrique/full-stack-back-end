@@ -7,7 +7,27 @@ import { DashboardService } from "src/domain/services/dashboard.service";
 export class DashboardController {
 	constructor(private readonly dashboardService: DashboardService) {}
 
-	@ApiResponse({ status: 200, description: "Dashboard metrics retrieved." })
+	@ApiResponse({
+		status: 200,
+		description: "Dashboard metrics retrieved successfully.",
+		schema: {
+			type: "object",
+			properties: {
+				totalOrders: {
+					type: "number",
+					description: "Total number of orders",
+				},
+				totalRevenue: {
+					type: "number",
+					description: "Total revenue from orders",
+				},
+			},
+		},
+	})
+	@ApiResponse({
+		status: 400,
+		description: "Invalid query parameters provided.",
+	})
 	@Get("metrics")
 	@ApiQuery({ name: "startDate", required: false, type: String })
 	@ApiQuery({ name: "endDate", required: false, type: String })

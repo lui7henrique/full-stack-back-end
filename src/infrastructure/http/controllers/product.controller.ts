@@ -20,7 +20,15 @@ import { Product } from "src/domain/schemas/product.schema";
 export class ProductController {
 	constructor(private readonly productService: ProductService) {}
 
-	@ApiResponse({ status: 201, description: "Product created." })
+	@ApiResponse({
+		status: 201,
+		description: "Product created successfully.",
+		type: Product,
+	})
+	@ApiResponse({
+		status: 400,
+		description: "Invalid product data provided.",
+	})
 	@Post()
 	async create(@Body() createProductDto: CreateProductDto) {
 		if (createProductDto.categoryIds) {
@@ -32,28 +40,57 @@ export class ProductController {
 		return this.productService.create(createProductDto);
 	}
 
-	@ApiResponse({ status: 200, description: "List of products." })
+	@ApiResponse({
+		status: 200,
+		description: "List of products retrieved successfully.",
+		type: [Product],
+	})
 	@Get()
 	findAll() {
 		return this.productService.findAll();
 	}
 
-	@ApiResponse({ status: 200, description: "Product found." })
-	@ApiResponse({ status: 404, description: "Product not found." })
+	@ApiResponse({
+		status: 200,
+		description: "Product found.",
+		type: Product,
+	})
+	@ApiResponse({
+		status: 404,
+		description: "Product not found.",
+	})
 	@Get(":id")
 	findOne(@Param("id") id: string) {
 		return this.productService.findOne(id);
 	}
 
-	@ApiResponse({ status: 200, description: "Product updated." })
-	@ApiResponse({ status: 404, description: "Product not found." })
+	@ApiResponse({
+		status: 200,
+		description: "Product updated successfully.",
+		type: Product,
+	})
+	@ApiResponse({
+		status: 404,
+		description: "Product not found.",
+	})
+	@ApiResponse({
+		status: 400,
+		description: "Invalid update data provided.",
+	})
 	@Put(":id")
 	update(@Param("id") id: string, @Body() updateProductDto: UpdateProductDto) {
 		return this.productService.update(id, updateProductDto);
 	}
 
-	@ApiResponse({ status: 200, description: "Product deleted." })
-	@ApiResponse({ status: 404, description: "Product not found." })
+	@ApiResponse({
+		status: 200,
+		description: "Product deleted successfully.",
+		type: Product,
+	})
+	@ApiResponse({
+		status: 404,
+		description: "Product not found.",
+	})
 	@Delete(":id")
 	remove(@Param("id") id: string) {
 		return this.productService.remove(id);

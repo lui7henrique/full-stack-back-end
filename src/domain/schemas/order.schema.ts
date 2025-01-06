@@ -1,16 +1,20 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
+import { ApiProperty } from "@nestjs/swagger";
 
 @Schema()
 export class Order extends Document {
+	@ApiProperty({ description: "The date when the order was created" })
 	@Prop({ required: true })
 	date: Date;
 
+	@ApiProperty({ description: "Array of product IDs in the order" })
 	@Prop({ type: [Types.ObjectId], ref: "Product" })
 	productIds: Types.ObjectId[];
 
+	@ApiProperty({ description: "Total amount of the order" })
 	@Prop({ required: true })
-	total: number;
+	price: number;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
