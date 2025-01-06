@@ -35,6 +35,20 @@
    - [x] Implement a Lambda function for background tasks (e.g., processing reports).
    - [x] Demonstrate how to trigger the Lambda (HTTP, cron, etc.).
 
-7. **Delivery**
+7. **AWS LocalStack Integration**
+
+   - [ ] **LocalStack Configuration**
+
+     - [ ] Add LocalStack service to Docker Compose for S3 simulation.
+     - [ ] Configure environment variables for LocalStack S3.
+     - [ ] Set up AWS SDK with LocalStack endpoints.
+
+   - [ ] **S3 Integration**
+     - [ ] Implement S3 service for file uploads.
+     - [ ] Add image upload functionality to Product creation/update.
+     - [ ] Generate and store S3 URLs for product images.
+     - [ ] Handle image deletion when product is removed.
+
+8. **Delivery**
    - [x] Set up Docker/Docker Compose for the backend and MongoDB.
    - [x] Document the project (README.md) with instructions for running and testing.
