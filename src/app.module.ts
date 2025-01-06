@@ -19,6 +19,8 @@ import { OrderService } from "./domain/services/order.service";
 import { MongooseCategoryRepository } from "./infrastructure/http/repositories/mongoose/category.repository";
 import { MongooseProductRepository } from "./infrastructure/http/repositories/mongoose/product.repository";
 import { MongooseOrderRepository } from "./infrastructure/http/repositories/mongoose/order.repository";
+import { ProductRepository } from "./domain/repositories/product.repository";
+import { CategoryRepository } from "./domain/repositories/category.repository";
 
 @Module({
 	imports: [
@@ -61,8 +63,26 @@ import { MongooseOrderRepository } from "./infrastructure/http/repositories/mong
 			provide: "CategoryRepository",
 			useClass: MongooseCategoryRepository,
 		},
-		ProductService,
-		CategoryService,
+		{
+			provide: ProductService,
+			useFactory: (
+				productRepo: ProductRepository,
+				categoryRepo: CategoryRepository,
+			) => {
+				return new ProductService(productRepo, categoryRepo);
+			},
+			inject: ["ProductRepository", "CategoryRepository"],
+		},
+		{
+			provide: CategoryService,
+			useFactory: (
+				categoryRepo: CategoryRepository,
+				productRepo: ProductRepository,
+			) => {
+				return new CategoryService(categoryRepo, productRepo);
+			},
+			inject: ["CategoryRepository", "ProductRepository"],
+		},
 		OrderService,
 		DashboardService,
 	],
