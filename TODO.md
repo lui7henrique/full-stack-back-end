@@ -37,4 +37,4 @@
 
 7. **Delivery**
    - [x] Set up Docker/Docker Compose for the backend and MongoDB.
-   - [ ] Document the project (README.md) with instructions for running and testing.
+   - [x] Document the project (README.md) with instructions for running and testing.
