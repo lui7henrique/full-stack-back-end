@@ -1,27 +1,27 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
+import { Injectable, NotFoundException, Inject } from "@nestjs/common";
 import { Product } from "../schemas/product.schema";
-import { Model, Types } from "mongoose";
+import { Types } from "mongoose";
 import { CreateProductDto } from "src/infrastructure/http/dtos/create-product.dto";
 import { UpdateProductDto } from "src/infrastructure/http/dtos/update-product.dto";
+import { ProductRepository } from "../repositories/product.repository";
 
 @Injectable()
 export class ProductService {
 	constructor(
-		@InjectModel(Product.name) private productModel: Model<Product>,
+		@Inject("ProductRepository")
+		private readonly productRepository: ProductRepository,
 	) {}
 
 	async create(createProductDto: CreateProductDto): Promise<Product> {
-		const createdProduct = new this.productModel(createProductDto);
-		return createdProduct.save();
+		return this.productRepository.create(createProductDto);
 	}
 
 	async findAll(): Promise<Product[]> {
-		return this.productModel.find().exec();
+		return this.productRepository.findAll();
 	}
 
 	async findOne(id: string): Promise<Product> {
-		const product = await this.productModel.findById(id).exec();
+		const product = await this.productRepository.findById(id);
 		if (!product) {
 			throw new NotFoundException(`Product with ID ${id} not found`);
 		}
@@ -32,34 +32,27 @@ export class ProductService {
 		id: string,
 		updateProductDto: UpdateProductDto,
 	): Promise<Product> {
-		const updatedProduct = await this.productModel
-			.findByIdAndUpdate(id, updateProductDto, { new: true })
-			.exec();
-
+		const updatedProduct = await this.productRepository.update(
+			id,
+			updateProductDto,
+		);
 		if (!updatedProduct) {
 			throw new NotFoundException(`Product with ID ${id} not found`);
 		}
-
 		return updatedProduct;
 	}
 
 	async remove(id: string): Promise<Product> {
-		const deletedProduct = await this.productModel.findByIdAndDelete(id).exec();
-
+		const deletedProduct = await this.productRepository.delete(id);
 		if (!deletedProduct) {
 			throw new NotFoundException(`Product with ID ${id} not found`);
 		}
-
 		return deletedProduct;
 	}
 
 	async getProductIdsByCategoryId(
 		categoryId: string,
 	): Promise<Types.ObjectId[]> {
-		const products = await this.productModel
-			.find({ categoryIds: { $in: [new Types.ObjectId(categoryId)] } })
-			.exec();
-
-		return products.map((product) => product._id as Types.ObjectId);
+		return this.productRepository.findByCategoryId(categoryId);
 	}
 }

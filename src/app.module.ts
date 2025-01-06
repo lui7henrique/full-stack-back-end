@@ -16,6 +16,9 @@ import { Category, CategorySchema } from "./domain/schemas/category.schema";
 import { OrderSchema } from "./domain/schemas/order.schema";
 import { Order } from "./domain/schemas/order.schema";
 import { OrderService } from "./domain/services/order.service";
+import { MongooseCategoryRepository } from "./infrastructure/http/repositories/mongoose/category.repository";
+import { MongooseProductRepository } from "./infrastructure/http/repositories/mongoose/product.repository";
+import { MongooseOrderRepository } from "./infrastructure/http/repositories/mongoose/order.repository";
 
 @Module({
 	imports: [
@@ -45,6 +48,23 @@ import { OrderService } from "./domain/services/order.service";
 		OrderController,
 		DashboardController,
 	],
-	providers: [ProductService, CategoryService, OrderService, DashboardService],
+	providers: [
+		{
+			provide: "ProductRepository",
+			useClass: MongooseProductRepository,
+		},
+		{
+			provide: "OrderRepository",
+			useClass: MongooseOrderRepository,
+		},
+		{
+			provide: "CategoryRepository",
+			useClass: MongooseCategoryRepository,
+		},
+		ProductService,
+		CategoryService,
+		OrderService,
+		DashboardService,
+	],
 })
 export class AppModule {}

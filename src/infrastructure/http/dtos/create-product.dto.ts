@@ -1,4 +1,10 @@
-import { IsString, IsNumber, IsOptional, IsArray } from "class-validator";
+import {
+	IsString,
+	IsNumber,
+	IsOptional,
+	IsArray,
+	IsPositive,
+} from "class-validator";
 import type { Types } from "mongoose";
 import { ApiProperty } from "@nestjs/swagger";
 
@@ -17,6 +23,7 @@ export class CreateProductDto {
 
 	@ApiProperty({ description: "The price of the product" })
 	@IsNumber()
+	@IsPositive()
 	price: number;
 
 	@ApiProperty({
