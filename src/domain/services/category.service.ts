@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Category } from "../schemas/category.schema";
-import { CreateCategoryDto } from "../dtos/create-category.dto";
-import { UpdateCategoryDto } from "../dtos/update-category.dto";
+import { CreateCategoryDto } from "src/infrastructure/http/dtos/create-category.dto";
+import { UpdateCategoryDto } from "src/infrastructure/http/dtos/update-category.dto";
 
 @Injectable()
 export class CategoryService {

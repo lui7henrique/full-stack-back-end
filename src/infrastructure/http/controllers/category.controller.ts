@@ -7,10 +7,11 @@ import {
 	Delete,
 	Put,
 } from "@nestjs/common";
-import { CategoryService } from "../services/category.service";
-import { CreateCategoryDto } from "../dtos/create-category.dto";
-import { UpdateCategoryDto } from "../dtos/update-category.dto";
+
 import { ApiTags, ApiResponse } from "@nestjs/swagger";
+import { CategoryService } from "src/domain/services/category.service";
+import { CreateCategoryDto } from "src/infrastructure/http/dtos/create-category.dto";
+import { UpdateCategoryDto } from "src/infrastructure/http/dtos/update-category.dto";
 
 @ApiTags("categories")
 @Controller("categories")

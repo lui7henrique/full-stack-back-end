@@ -3,18 +3,19 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { envSchema } from "./env";
 
-import { Product, ProductSchema } from "./schemas/product.schema";
-import { Category, CategorySchema } from "./schemas/category.schema";
-import { Order, OrderSchema } from "./schemas/order.schema";
-
-import { ProductService } from "./services/product.service";
-import { ProductController } from "./controllers/product.controller";
-import { CategoryService } from "./services/category.service";
-import { CategoryController } from "./controllers/category.controller";
-import { OrderService } from "./services/order.service";
-import { OrderController } from "./controllers/order.controller";
-import { DashboardService } from "./services/dashboard.service";
-import { DashboardController } from "./controllers/dashboard.controller";
+import { ProductController } from "./infrastructure/http/controllers/product.controller";
+import { CategoryController } from "./infrastructure/http/controllers/category.controller";
+import { OrderController } from "./infrastructure/http/controllers/order.controller";
+import { DashboardController } from "./infrastructure/http/controllers/dashboard.controller";
+import { ProductService } from "./domain/services/product.service";
+import { ProductSchema } from "./domain/schemas/product.schema";
+import { CategoryService } from "./domain/services/category.service";
+import { DashboardService } from "./domain/services/dashboard.service";
+import { Product } from "./domain/schemas/product.schema";
+import { Category, CategorySchema } from "./domain/schemas/category.schema";
+import { OrderSchema } from "./domain/schemas/order.schema";
+import { Order } from "./domain/schemas/order.schema";
+import { OrderService } from "./domain/services/order.service";
 
 @Module({
 	imports: [

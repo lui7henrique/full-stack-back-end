@@ -1,10 +1,12 @@
 import { NestFactory } from "@nestjs/core";
 import { faker } from "@faker-js/faker";
 import { AppModule } from "./app.module";
-import { CategoryService } from "./services/category.service";
-import { ProductService } from "./services/product.service";
-import { OrderService } from "./services/order.service";
+
 import { Types } from "mongoose";
+
+import { CategoryService } from "./domain/services/category.service";
+import { OrderService } from "./domain/services/order.service";
+import { ProductService } from "./domain/services/product.service";
 
 async function seed() {
 	const app = await NestFactory.createApplicationContext(AppModule);

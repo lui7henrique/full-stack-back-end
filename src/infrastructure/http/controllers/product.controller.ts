@@ -7,11 +7,12 @@ import {
 	Delete,
 	Put,
 } from "@nestjs/common";
-import { ProductService } from "../services/product.service";
-import { CreateProductDto } from "../dtos/create-product.dto";
-import { UpdateProductDto } from "../dtos/update-product.dto";
+
 import { ApiTags, ApiResponse } from "@nestjs/swagger";
 import { Types } from "mongoose";
+import { ProductService } from "src/domain/services/product.service";
+import { CreateProductDto } from "src/infrastructure/http/dtos/create-product.dto";
+import { UpdateProductDto } from "../dtos/update-product.dto";
 
 @ApiTags("products")
 @Controller("products")
