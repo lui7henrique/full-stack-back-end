@@ -35,4 +35,19 @@ export class S3Service {
 
 		await this.s3Client.send(command);
 	}
+
+	async uploadFile(
+		key: string,
+		file: Buffer,
+		contentType: string,
+	): Promise<void> {
+		const command = new PutObjectCommand({
+			Bucket: this.getBucketName(),
+			Key: key,
+			Body: file,
+			ContentType: contentType,
+		});
+
+		await this.s3Client.send(command);
+	}
 }

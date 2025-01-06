@@ -6,19 +6,28 @@ import {
 	Param,
 	Delete,
 	Put,
+	UseInterceptors,
+	UploadedFile,
 } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { type Express } from "express";
 
-import { ApiTags, ApiResponse } from "@nestjs/swagger";
+import { ApiTags, ApiResponse, ApiConsumes, ApiBody } from "@nestjs/swagger";
 import { Types } from "mongoose";
 import { ProductService } from "src/domain/services/product.service";
 import { CreateProductDto } from "src/infrastructure/http/dtos/create-product.dto";
 import { UpdateProductDto } from "../dtos/update-product.dto";
 import { Product } from "src/domain/schemas/product.schema";
+import { S3Service } from "src/infrastructure/aws/s3.service";
+import { UploadProductImageDto } from "../dtos/upload-product-image.dto";
 
 @ApiTags("products")
 @Controller("products")
 export class ProductController {
-	constructor(private readonly productService: ProductService) {}
+	constructor(
+		private readonly productService: ProductService,
+		private readonly s3Service: S3Service,
+	) {}
 
 	@ApiResponse({
 		status: 201,
@@ -94,5 +103,55 @@ export class ProductController {
 	@Delete(":id")
 	remove(@Param("id") id: string) {
 		return this.productService.remove(id);
+	}
+
+	@ApiConsumes("multipart/form-data")
+	@ApiBody({
+		schema: {
+			type: "object",
+			properties: {
+				file: {
+					type: "string",
+					format: "binary",
+					description: "The image file to upload",
+				},
+			},
+		},
+	})
+	@ApiResponse({
+		status: 200,
+		description: "Image uploaded successfully",
+		schema: {
+			type: "object",
+			properties: {
+				imageUrl: { type: "string" },
+			},
+		},
+	})
+	@ApiResponse({
+		status: 404,
+		description: "Product not found",
+	})
+	@Post(":id/image")
+	@UseInterceptors(FileInterceptor("file"))
+	async uploadImage(
+		@Param("id") id: string,
+		@UploadedFile() file: Express.Multer.File,
+	) {
+		await this.productService.findOne(id);
+
+		const fileExtension = file.originalname.split(".").pop();
+		const fileName = `${Date.now()}.${fileExtension}`;
+		const key = `products/${id}/${fileName}`;
+
+		await this.s3Service.uploadFile(key, file.buffer, file.mimetype);
+
+		const imageUrl = `${process.env.AWS_ENDPOINT}/${process.env.S3_BUCKET_NAME}/${key}`;
+
+		await this.productService.update(id, {
+			imageUrl,
+		});
+
+		return { imageUrl };
 	}
 }

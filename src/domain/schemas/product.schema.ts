@@ -23,8 +23,8 @@ export class Product extends Document {
 	categoryIds: Types.ObjectId[];
 
 	@ApiProperty({ description: "URL of the product image" })
-	@Prop()
-	imageUrl: string;
+	@Prop({ default: null })
+	imageUrl: string | null;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

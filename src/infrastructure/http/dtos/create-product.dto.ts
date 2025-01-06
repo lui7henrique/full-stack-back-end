@@ -34,8 +34,12 @@ export class CreateProductDto {
 	@IsArray()
 	categoryIds?: Types.ObjectId[];
 
-	@ApiProperty({ description: "URL of the product image", required: false })
+	@ApiProperty({
+		description: "URL of the product image",
+		required: false,
+		default: null,
+	})
 	@IsOptional()
 	@IsString()
-	imageUrl?: string;
+	imageUrl: string | null = null;
 }

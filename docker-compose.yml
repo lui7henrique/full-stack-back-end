@@ -21,6 +21,7 @@ services:
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
       - localstack_data:/var/lib/localstack
+      - ./localstack-init:/etc/localstack/init/ready.d
 
 volumes:
   mongodb_data:  

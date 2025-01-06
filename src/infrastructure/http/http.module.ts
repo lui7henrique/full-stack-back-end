@@ -9,39 +9,16 @@ import { OrderService } from "src/domain/services/order.service";
 import { DashboardService } from "src/domain/services/dashboard.service";
 import { DatabaseModule } from "../database/database.module";
 import { EventModule } from "../events/event.module";
-import { EventService } from "../events/event.service";
+import { AwsModule } from "../aws/aws.module";
 
 @Module({
-	imports: [DatabaseModule, EventModule],
+	imports: [DatabaseModule, EventModule, AwsModule],
 	controllers: [
 		ProductController,
 		CategoryController,
 		OrderController,
 		DashboardController,
 	],
-	providers: [
-		{
-			provide: ProductService,
-			useFactory: (productRepo, categoryRepo) => {
-				return new ProductService(productRepo, categoryRepo);
-			},
-			inject: ["ProductRepository", "CategoryRepository"],
-		},
-		{
-			provide: CategoryService,
-			useFactory: (categoryRepo, productRepo) => {
-				return new CategoryService(categoryRepo, productRepo);
-			},
-			inject: ["CategoryRepository", "ProductRepository"],
-		},
-		{
-			provide: OrderService,
-			useFactory: (orderRepo, eventService) => {
-				return new OrderService(orderRepo, eventService);
-			},
-			inject: ["OrderRepository", EventService],
-		},
-		DashboardService,
-	],
+	providers: [ProductService, CategoryService, OrderService, DashboardService],
 })
 export class HttpModule {}
