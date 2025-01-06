@@ -7,14 +7,14 @@
 	"license": "UNLICENSED",
 	"scripts": {
 		"build": "nest build",
-		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"start": "nest start",
 		"start:dev": "nest start --watch",
 		"start:debug": "nest start --debug --watch",
 		"start:prod": "node dist/main",
 		"seed": "ts-node src/seed.ts",
 		"lint": "biome format --write .",
-		"test:lambda": "ts-node src/infrastructure/lambda/order-notification.ts"
+		"test:lambda": "ts-node src/infrastructure/lambda/order-notification.ts",
+		"start:lambda": "serverless offline start"
 	},
 	"dependencies": {
 		"@faker-js/faker": "^9.3.0",
