@@ -85,6 +85,9 @@ Currently, the Lambda function is triggered by an event emitter when orders are 
 
 - When deleting a category, the system first checks if any products are linked to it.
 - If products are associated, the category is removed from them before the category is deleted.
+- The order total is currently received in the request body, but it should be calculated server-side based on the product prices to ensure data consistency and prevent manipulation.
 
 **Reasoning:**
-This approach prevents invalid references, preserves order history, and avoids unintended data loss.
+
+- The category deletion approach prevents invalid references, preserves order history, and avoids unintended data loss.
+- Calculating order totals server-side would improve data integrity and security by preventing price manipulation in requests.
