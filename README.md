@@ -37,7 +37,7 @@ pnpm run seed
 pnpm run start:dev
 ```
 
-The API documentation will be available at `http://localhost:3333/api/docs`
+The API documentation will be available at `http://localhost:3333/api`
 
 ### 6. Start Serverless Framework
 

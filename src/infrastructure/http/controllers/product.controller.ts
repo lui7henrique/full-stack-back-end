@@ -12,7 +12,13 @@ import {
 import { FileInterceptor } from "@nestjs/platform-express";
 import { type Express } from "express";
 
-import { ApiTags, ApiResponse, ApiConsumes, ApiBody } from "@nestjs/swagger";
+import {
+	ApiTags,
+	ApiResponse,
+	ApiConsumes,
+	ApiBody,
+	ApiOperation,
+} from "@nestjs/swagger";
 import { Types } from "mongoose";
 import { ProductService } from "src/domain/services/product.service";
 import { CreateProductDto } from "src/infrastructure/http/dtos/create-product.dto";
@@ -24,6 +30,7 @@ import { Product } from "src/domain/schemas/product.schema";
 export class ProductController {
 	constructor(private readonly productService: ProductService) {}
 
+	@ApiOperation({ operationId: "createProduct" })
 	@ApiResponse({
 		status: 201,
 		description: "Product created successfully.",
@@ -44,6 +51,7 @@ export class ProductController {
 		return this.productService.create(createProductDto);
 	}
 
+	@ApiOperation({ operationId: "getProducts" })
 	@ApiResponse({
 		status: 200,
 		description: "List of products retrieved successfully.",
@@ -54,6 +62,7 @@ export class ProductController {
 		return this.productService.findAll();
 	}
 
+	@ApiOperation({ operationId: "getProduct" })
 	@ApiResponse({
 		status: 200,
 		description: "Product found.",
@@ -68,6 +77,7 @@ export class ProductController {
 		return this.productService.findOne(id);
 	}
 
+	@ApiOperation({ operationId: "updateProduct" })
 	@ApiResponse({
 		status: 200,
 		description: "Product updated successfully.",
@@ -86,6 +96,7 @@ export class ProductController {
 		return this.productService.update(id, updateProductDto);
 	}
 
+	@ApiOperation({ operationId: "deleteProduct" })
 	@ApiResponse({
 		status: 200,
 		description: "Product deleted successfully.",
@@ -100,6 +111,7 @@ export class ProductController {
 		return this.productService.remove(id);
 	}
 
+	@ApiOperation({ operationId: "uploadProductImage" })
 	@ApiConsumes("multipart/form-data")
 	@ApiBody({
 		schema: {

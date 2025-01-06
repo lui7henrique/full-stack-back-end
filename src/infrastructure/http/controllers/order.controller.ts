@@ -8,7 +8,7 @@ import {
 	Put,
 } from "@nestjs/common";
 
-import { ApiTags, ApiResponse } from "@nestjs/swagger";
+import { ApiTags, ApiResponse, ApiOperation } from "@nestjs/swagger";
 import { Types } from "mongoose";
 import { OrderService } from "src/domain/services/order.service";
 import { CreateOrderDto } from "../dtos/create-order.dto";
@@ -20,6 +20,7 @@ import { Order } from "src/domain/schemas/order.schema";
 export class OrderController {
 	constructor(private readonly orderService: OrderService) {}
 
+	@ApiOperation({ operationId: "createOrder" })
 	@ApiResponse({
 		status: 201,
 		description: "Order created successfully.",
@@ -40,6 +41,7 @@ export class OrderController {
 		return this.orderService.create(createOrderDto);
 	}
 
+	@ApiOperation({ operationId: "getOrders" })
 	@ApiResponse({
 		status: 200,
 		description: "List of orders retrieved successfully.",
@@ -50,6 +52,7 @@ export class OrderController {
 		return this.orderService.findAll();
 	}
 
+	@ApiOperation({ operationId: "getOrder" })
 	@ApiResponse({
 		status: 200,
 		description: "Order found.",
@@ -64,6 +67,7 @@ export class OrderController {
 		return this.orderService.findOne(id);
 	}
 
+	@ApiOperation({ operationId: "updateOrder" })
 	@ApiResponse({
 		status: 200,
 		description: "Order updated successfully.",
@@ -82,6 +86,7 @@ export class OrderController {
 		return this.orderService.update(id, updateOrderDto);
 	}
 
+	@ApiOperation({ operationId: "deleteOrder" })
 	@ApiResponse({
 		status: 200,
 		description: "Order deleted successfully.",

@@ -51,13 +51,13 @@ async function seed() {
 					description: faker.commerce.productDescription(),
 					price: Number.parseFloat(faker.commerce.price()),
 					categoryIds: faker.helpers.arrayElements(
-						categories.map((cat) => cat._id) as Types.ObjectId[],
+						categories.map((cat) => cat._id),
 						faker.number.int({
 							min: SEED_CONSTANTS.PRODUCTS.MIN_CATEGORIES,
 							max: SEED_CONSTANTS.PRODUCTS.MAX_CATEGORIES,
 						}),
 					),
-					imageUrl: faker.image.url(),
+					imageUrl: `https://picsum.photos/seed/${faker.number.int()}/200/300`,
 				}),
 			),
 		);

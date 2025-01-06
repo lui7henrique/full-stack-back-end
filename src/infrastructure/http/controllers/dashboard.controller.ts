@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { ApiTags, ApiResponse } from "@nestjs/swagger";
+import { ApiTags, ApiResponse, ApiOperation } from "@nestjs/swagger";
 import { DashboardService } from "src/domain/services/dashboard.service";
 import { GetDashboardMetricsDto } from "../dtos/get-dashboard-metrics.dto";
 
@@ -8,6 +8,7 @@ import { GetDashboardMetricsDto } from "../dtos/get-dashboard-metrics.dto";
 export class DashboardController {
 	constructor(private readonly dashboardService: DashboardService) {}
 
+	@ApiOperation({ operationId: "getDashboardMetrics" })
 	@ApiResponse({
 		status: 200,
 		description: "Dashboard metrics retrieved successfully.",

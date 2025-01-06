@@ -8,7 +8,7 @@ import {
 	Put,
 } from "@nestjs/common";
 
-import { ApiTags, ApiResponse } from "@nestjs/swagger";
+import { ApiTags, ApiResponse, ApiOperation } from "@nestjs/swagger";
 import { Category } from "src/domain/schemas/category.schema";
 import { CategoryService } from "src/domain/services/category.service";
 import { CreateCategoryDto } from "src/infrastructure/http/dtos/create-category.dto";
@@ -19,6 +19,7 @@ import { UpdateCategoryDto } from "src/infrastructure/http/dtos/update-category.
 export class CategoryController {
 	constructor(private readonly categoryService: CategoryService) {}
 
+	@ApiOperation({ operationId: "createCategory" })
 	@ApiResponse({
 		status: 201,
 		description: "Category created successfully.",
@@ -33,6 +34,7 @@ export class CategoryController {
 		return this.categoryService.create(createCategoryDto);
 	}
 
+	@ApiOperation({ operationId: "getCategories" })
 	@ApiResponse({
 		status: 200,
 		description: "List of categories retrieved successfully.",
@@ -43,6 +45,7 @@ export class CategoryController {
 		return this.categoryService.findAll();
 	}
 
+	@ApiOperation({ operationId: "getCategory" })
 	@ApiResponse({
 		status: 200,
 		description: "Category found.",
@@ -57,6 +60,7 @@ export class CategoryController {
 		return this.categoryService.findOne(id);
 	}
 
+	@ApiOperation({ operationId: "updateCategory" })
 	@ApiResponse({
 		status: 200,
 		description: "Category updated successfully.",
@@ -78,6 +82,7 @@ export class CategoryController {
 		return this.categoryService.update(id, updateCategoryDto);
 	}
 
+	@ApiOperation({ operationId: "deleteCategory" })
 	@ApiResponse({
 		status: 200,
 		description: "Category deleted successfully.",
