@@ -43,11 +43,11 @@
      - [x] Configure environment variables for LocalStack S3.
      - [x] Set up AWS SDK with LocalStack endpoints.
 
-   - [ ] **S3 Integration**
-     - [ ] Implement S3 service for file uploads.
-     - [ ] Add image upload functionality to Product creation/update.
-     - [ ] Generate and store S3 URLs for product images.
-     - [ ] Handle image deletion when product is removed.
+   - [x] **S3 Integration**
+     - [x] Implement S3 service for file uploads.
+     - [x] Add image upload functionality to Product creation/update.
+     - [x] Generate and store S3 URLs for product images.
+     - [x] Handle image deletion when product is removed.
 
 8. **Delivery**
    - [x] Set up Docker/Docker Compose for the backend and MongoDB.

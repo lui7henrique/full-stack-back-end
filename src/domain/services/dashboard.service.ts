@@ -24,15 +24,26 @@ export class DashboardService {
 			productIds?: Types.ObjectId[];
 		} = {};
 
-		if (startDate) criteria.startDate = new Date(startDate);
-		if (endDate) criteria.endDate = new Date(endDate);
+		if (startDate) {
+			const start = new Date(startDate);
+			start.setUTCHours(0, 0, 0, 0);
+			criteria.startDate = start;
+		}
+
+		if (endDate) {
+			const end = new Date(endDate);
+			end.setUTCHours(23, 59, 59, 999);
+			criteria.endDate = end;
+		}
 
 		if (categoryId) {
 			const productIds =
 				await this.productRepository.findByCategoryId(categoryId);
+
 			if (productIds.length === 0) {
 				return { totalOrders: 0, totalRevenue: 0 };
 			}
+
 			criteria.productIds = productIds;
 		}
 

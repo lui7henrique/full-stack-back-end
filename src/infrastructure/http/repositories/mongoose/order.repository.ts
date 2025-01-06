@@ -46,6 +46,7 @@ export class MongooseOrderRepository implements OrderRepository {
 
 		if (criteria.startDate || criteria.endDate) {
 			match.date = {};
+
 			if (criteria.startDate) match.date.$gte = criteria.startDate;
 			if (criteria.endDate) match.date.$lte = criteria.endDate;
 		}

@@ -1,6 +1,7 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { ApiTags, ApiResponse, ApiQuery } from "@nestjs/swagger";
+import { ApiTags, ApiResponse } from "@nestjs/swagger";
 import { DashboardService } from "src/domain/services/dashboard.service";
+import { GetDashboardMetricsDto } from "../dtos/get-dashboard-metrics.dto";
 
 @ApiTags("dashboard")
 @Controller("dashboard")
@@ -29,21 +30,12 @@ export class DashboardController {
 		description: "Invalid query parameters provided.",
 	})
 	@Get("metrics")
-	@ApiQuery({ name: "startDate", required: false, type: String })
-	@ApiQuery({ name: "endDate", required: false, type: String })
-	@ApiQuery({ name: "categoryId", required: false, type: String })
-	@ApiQuery({ name: "productId", required: false, type: String })
-	async getMetrics(
-		@Query("startDate") startDate?: string,
-		@Query("endDate") endDate?: string,
-		@Query("categoryId") categoryId?: string,
-		@Query("productId") productId?: string,
-	) {
+	async getMetrics(@Query() query: GetDashboardMetricsDto) {
 		return this.dashboardService.getMetrics(
-			startDate,
-			endDate,
-			categoryId,
-			productId,
+			query.startDate,
+			query.endDate,
+			query.categoryId,
+			query.productId,
 		);
 	}
 }
