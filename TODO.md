@@ -24,7 +24,7 @@
 4. **Dashboard**
 
    - [x] Create an endpoint for aggregated metrics (total orders, revenue, etc.).
-   - [ ] Use MongoDB queries to filter data by period, category, and product.
+   - [x] Use MongoDB queries to filter data by period, category, and product.
 
 5. **Data Seeding Script**
 
