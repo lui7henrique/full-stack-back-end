@@ -23,6 +23,12 @@ Create a `.env` file:
 ```
 MONGODB_URI=mongodb://localhost:27017
 MONGODB_DATABASE=db
+
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=test
+AWS_SECRET_ACCESS_KEY=test
+AWS_ENDPOINT=http://localhost:4566
+S3_BUCKET_NAME=bucket
 ```
 
 ### 4. Seed Database
