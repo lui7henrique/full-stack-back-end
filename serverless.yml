@@ -14,6 +14,8 @@ provider:
 functions:
   orderNotification:
     handler: src/infrastructure/lambda/order-notification.handler
+    timeout: 30
+    memorySize: 256
     events:
       - http:
           path: notifications/order

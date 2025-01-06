@@ -17,7 +17,11 @@ export class DashboardService {
 		endDate?: string,
 		categoryId?: string,
 		productId?: string,
-	): Promise<{ totalOrders: number; totalRevenue: number }> {
+	): Promise<{
+		totalOrders: number;
+		totalRevenue: number;
+		averageOrderValue: number;
+	}> {
 		const criteria: {
 			startDate?: Date;
 			endDate?: Date;
@@ -41,7 +45,11 @@ export class DashboardService {
 				await this.productRepository.findByCategoryId(categoryId);
 
 			if (productIds.length === 0) {
-				return { totalOrders: 0, totalRevenue: 0 };
+				return {
+					totalOrders: 0,
+					totalRevenue: 0,
+					averageOrderValue: 0,
+				};
 			}
 
 			criteria.productIds = productIds;

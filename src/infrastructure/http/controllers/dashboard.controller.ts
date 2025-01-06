@@ -23,6 +23,10 @@ export class DashboardController {
 					type: "number",
 					description: "Total revenue from orders",
 				},
+				averageOrderValue: {
+					type: "number",
+					description: "Average value per order",
+				},
 			},
 		},
 	})

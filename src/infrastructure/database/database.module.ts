@@ -4,9 +4,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Product, ProductSchema } from "src/domain/schemas/product.schema";
 import { Category, CategorySchema } from "src/domain/schemas/category.schema";
 import { Order, OrderSchema } from "src/domain/schemas/order.schema";
-import { MongooseCategoryRepository } from "../http/repositories/mongoose/category.repository";
-import { MongooseProductRepository } from "../http/repositories/mongoose/product.repository";
-import { MongooseOrderRepository } from "../http/repositories/mongoose/order.repository";
+import { MongooseProductRepository } from "./repositories/mongoose/product.repository";
+import { MongooseOrderRepository } from "./repositories/mongoose/order.repository";
+import { MongooseCategoryRepository } from "./repositories/mongoose/category.repository";
 
 @Module({
 	imports: [

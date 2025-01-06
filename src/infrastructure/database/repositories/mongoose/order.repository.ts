@@ -41,29 +41,40 @@ export class MongooseOrderRepository implements OrderRepository {
 		startDate?: Date;
 		endDate?: Date;
 		productIds?: Types.ObjectId[];
-	}): Promise<{ totalOrders: number; totalRevenue: number }> {
-		const match: MatchCriteria = {};
+	}): Promise<{
+		totalOrders: number;
+		totalRevenue: number;
+		averageOrderValue: number;
+	}> {
+		const query: MatchCriteria = {};
 
 		if (criteria.startDate || criteria.endDate) {
-			match.date = {};
+			query.date = {};
 
-			if (criteria.startDate) match.date.$gte = criteria.startDate;
-			if (criteria.endDate) match.date.$lte = criteria.endDate;
+			if (criteria.startDate) query.date.$gte = criteria.startDate;
+			if (criteria.endDate) query.date.$lte = criteria.endDate;
 		}
 
 		if (criteria.productIds?.length) {
-			match.productIds = { $in: criteria.productIds };
+			query.productIds = { $in: criteria.productIds };
 		}
 
-		const totalOrders = await this.orderModel.countDocuments(match).exec();
-		const totalRevenue = await this.orderModel.aggregate([
-			{ $match: match },
-			{ $group: { _id: null, total: { $sum: "$total" } } },
+		const [result] = await this.orderModel.aggregate([
+			{ $match: query },
+			{
+				$group: {
+					_id: null,
+					totalOrders: { $sum: 1 },
+					totalRevenue: { $sum: "$total" },
+					averageOrderValue: { $avg: "$total" },
+				},
+			},
 		]);
 
 		return {
-			totalOrders,
-			totalRevenue: totalRevenue[0]?.total || 0,
+			totalOrders: result?.totalOrders || 0,
+			totalRevenue: result?.totalRevenue || 0,
+			averageOrderValue: result?.averageOrderValue || 0,
 		};
 	}
 }

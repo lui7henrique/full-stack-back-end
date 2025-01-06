@@ -11,5 +11,9 @@ export interface OrderRepository {
 		startDate?: Date;
 		endDate?: Date;
 		productIds?: Types.ObjectId[];
-	}): Promise<{ totalOrders: number; totalRevenue: number }>;
+	}): Promise<{
+		totalOrders: number;
+		totalRevenue: number;
+		averageOrderValue: number;
+	}>;
 }
