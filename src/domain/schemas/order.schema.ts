@@ -5,7 +5,7 @@ import { ApiProperty } from "@nestjs/swagger";
 @Schema()
 export class Order extends Document {
 	@ApiProperty({ description: "The date when the order was created" })
-	@Prop({ required: true })
+	@Prop({ required: true, default: Date.now })
 	date: Date;
 
 	@ApiProperty({ description: "Array of product IDs in the order" })
@@ -14,7 +14,7 @@ export class Order extends Document {
 
 	@ApiProperty({ description: "Total amount of the order" })
 	@Prop({ required: true })
-	price: number;
+	total: number;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

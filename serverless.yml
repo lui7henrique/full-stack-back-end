@@ -1,0 +1,20 @@
+service: order-notification
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  environment:
+    MONGODB_URI: ${env:MONGODB_URI}
+    MONGODB_DATABASE: ${env:MONGODB_DATABASE}
+
+functions:
+  orderNotification:
+    handler: src/infrastructure/lambda/order-notification.handler
+    events:
+      - http:
+          path: notifications/order
+          method: post

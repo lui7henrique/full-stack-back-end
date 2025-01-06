@@ -3,16 +3,20 @@ import { Order } from "../schemas/order.schema";
 import { CreateOrderDto } from "src/infrastructure/http/dtos/create-order.dto";
 import { UpdateOrderDto } from "src/infrastructure/http/dtos/update-order.dto";
 import { OrderRepository } from "../repositories/order.repository";
+import { EventService } from "src/infrastructure/events/event.service";
 
 @Injectable()
 export class OrderService {
 	constructor(
 		@Inject("OrderRepository")
 		private readonly orderRepository: OrderRepository,
+		private readonly eventService: EventService,
 	) {}
 
 	async create(createOrderDto: CreateOrderDto): Promise<Order> {
-		return this.orderRepository.create(createOrderDto);
+		const order = await this.orderRepository.create(createOrderDto);
+		this.eventService.emitOrderCreated(order._id.toString());
+		return order;
 	}
 
 	async findAll(): Promise<Order[]> {

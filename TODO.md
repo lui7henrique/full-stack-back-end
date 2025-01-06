@@ -32,8 +32,8 @@
 
 6. **Serverless Lambda**
 
-   - [ ] Implement a Lambda function for background tasks (e.g., processing reports).
-   - [ ] Demonstrate how to trigger the Lambda (HTTP, cron, etc.).
+   - [x] Implement a Lambda function for background tasks (e.g., processing reports).
+   - [x] Demonstrate how to trigger the Lambda (HTTP, cron, etc.).
 
 7. **Delivery**
    - [x] Set up Docker/Docker Compose for the backend and MongoDB.

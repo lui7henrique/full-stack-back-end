@@ -51,7 +51,6 @@ async function seed() {
 				);
 
 				return orderService.create({
-					date: faker.date.past(),
 					productIds: selectedProducts.map(
 						(product) => product._id,
 					) as Types.ObjectId[],

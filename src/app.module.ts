@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { envSchema } from "./env";
+import { EventEmitterModule } from "@nestjs/event-emitter";
 
 import { ProductController } from "./infrastructure/http/controllers/product.controller";
 import { CategoryController } from "./infrastructure/http/controllers/category.controller";
@@ -21,6 +22,9 @@ import { MongooseProductRepository } from "./infrastructure/http/repositories/mo
 import { MongooseOrderRepository } from "./infrastructure/http/repositories/mongoose/order.repository";
 import { ProductRepository } from "./domain/repositories/product.repository";
 import { CategoryRepository } from "./domain/repositories/category.repository";
+import { EventService } from "./infrastructure/events/event.service";
+import { OrderCreatedListener } from "./infrastructure/events/order-created.listener";
+import { OrderRepository } from "./domain/repositories/order.repository";
 
 @Module({
 	imports: [
@@ -43,6 +47,7 @@ import { CategoryRepository } from "./domain/repositories/category.repository";
 			{ name: Category.name, schema: CategorySchema },
 			{ name: Order.name, schema: OrderSchema },
 		]),
+		EventEmitterModule.forRoot(),
 	],
 	controllers: [
 		ProductController,
@@ -85,6 +90,15 @@ import { CategoryRepository } from "./domain/repositories/category.repository";
 		},
 		OrderService,
 		DashboardService,
+		EventService,
+		OrderCreatedListener,
+		{
+			provide: OrderService,
+			useFactory: (orderRepo: OrderRepository, eventService: EventService) => {
+				return new OrderService(orderRepo, eventService);
+			},
+			inject: ["OrderRepository", EventService],
+		},
 	],
 })
 export class AppModule {}
