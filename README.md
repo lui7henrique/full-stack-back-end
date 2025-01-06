@@ -1,4 +1,4 @@
-# Full-stack back-end
+# Full-Stack Back-end
 
 A NestJS API for managing products, categories, and orders with an automated order notification system using AWS Lambda.
 
@@ -63,7 +63,7 @@ You can test the Lambda function in two ways:
    - Run `pnpm run test:lambda`
    - Check the console for an Ethereal email preview link (e.g., `https://ethereal.email/message/...`)
 
-In both cases, the console will display a link to preview the notification email through Ethereal - a fake SMTP service that captures the emails that would be sent in a production environment. The
+In both cases, the console will display a link to preview the notification email through Ethereal - a fake SMTP service that captures the emails that would be sent in a production environment.
 
 ## Lambda Trigger Options
 
