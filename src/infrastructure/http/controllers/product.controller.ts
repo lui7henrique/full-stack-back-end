@@ -18,16 +18,11 @@ import { ProductService } from "src/domain/services/product.service";
 import { CreateProductDto } from "src/infrastructure/http/dtos/create-product.dto";
 import { UpdateProductDto } from "../dtos/update-product.dto";
 import { Product } from "src/domain/schemas/product.schema";
-import { S3Service } from "src/infrastructure/aws/s3.service";
-import { UploadProductImageDto } from "../dtos/upload-product-image.dto";
 
 @ApiTags("products")
 @Controller("products")
 export class ProductController {
-	constructor(
-		private readonly productService: ProductService,
-		private readonly s3Service: S3Service,
-	) {}
+	constructor(private readonly productService: ProductService) {}
 
 	@ApiResponse({
 		status: 201,
@@ -138,20 +133,6 @@ export class ProductController {
 		@Param("id") id: string,
 		@UploadedFile() file: Express.Multer.File,
 	) {
-		await this.productService.findOne(id);
-
-		const fileExtension = file.originalname.split(".").pop();
-		const fileName = `${Date.now()}.${fileExtension}`;
-		const key = `products/${id}/${fileName}`;
-
-		await this.s3Service.uploadFile(key, file.buffer, file.mimetype);
-
-		const imageUrl = `${process.env.AWS_ENDPOINT}/${process.env.S3_BUCKET_NAME}/${key}`;
-
-		await this.productService.update(id, {
-			imageUrl,
-		});
-
-		return { imageUrl };
+		return this.productService.uploadImage(id, file);
 	}
 }

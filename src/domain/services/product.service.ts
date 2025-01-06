@@ -10,6 +10,7 @@ import { CreateProductDto } from "src/infrastructure/http/dtos/create-product.dt
 import { UpdateProductDto } from "src/infrastructure/http/dtos/update-product.dto";
 import { ProductRepository } from "../repositories/product.repository";
 import { CategoryRepository } from "../repositories/category.repository";
+import { S3Service } from "src/infrastructure/aws/s3.service";
 
 @Injectable()
 export class ProductService {
@@ -18,6 +19,7 @@ export class ProductService {
 		private readonly productRepository: ProductRepository,
 		@Inject("CategoryRepository")
 		private readonly categoryRepository: CategoryRepository,
+		private readonly s3Service: S3Service,
 	) {}
 
 	async create(createProductDto: CreateProductDto): Promise<Product> {
@@ -91,5 +93,24 @@ export class ProductService {
 				);
 			}
 		}
+	}
+
+	async uploadImage(
+		id: string,
+		file: Express.Multer.File,
+	): Promise<{ imageUrl: string }> {
+		await this.findOne(id);
+
+		const fileExtension = file.originalname.split(".").pop();
+		const fileName = `${Date.now()}.${fileExtension}`;
+		const key = `products/${id}/${fileName}`;
+
+		await this.s3Service.uploadFile(key, file.buffer, file.mimetype);
+
+		const imageUrl = `${process.env.AWS_ENDPOINT}/${process.env.S3_BUCKET_NAME}/${key}`;
+
+		await this.update(id, { imageUrl });
+
+		return { imageUrl };
 	}
 }
