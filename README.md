@@ -49,8 +49,6 @@ pnpm run start:lambda
 
 ## Testing Order Notifications
 
-## Testing Order Notifications
-
 You can test the Lambda function in two ways:
 
 1. **Through Swagger UI**:
